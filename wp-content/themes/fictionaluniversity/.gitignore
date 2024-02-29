@@ -1,1 +1,4 @@
 node_modules/
+wp-admin/
+wp-includes/
+package-lock.json
