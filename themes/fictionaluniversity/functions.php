@@ -49,6 +49,7 @@ function pageBanner($args = [])
 // Enqueueing Scripts
 function university_files()
 {
+    wp_enqueue_script('googleMap', '//maps.googleapis.com/maps/api/js?key=AIzaSyBJ0Ah1go3F3Fd7I65PYQdcK5R_vMMrWns', NULL, '1.0', true);
     wp_enqueue_script('main-university-js', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
     wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
     wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -85,12 +86,19 @@ function add_nav_menu_classes($classes, $item)
     if ((is_post_type_archive('program') || get_post_type() == 'program' || is_page('programs')) && ($item->title == "Programs")) {
         $classes[] = 'current-menu-item';
     }
+
     # Blog Post and Archives
     if (get_post_type() == 'post' && ($item->title == 'Blog')) {
         $classes[] = 'current-menu-item';
     }
+
     # Event post and Archives
     if ((is_post_type_archive('event') || get_post_type() == 'event' || is_page('past-events')) && ($item->title == "Events")) {
+        $classes[] = 'current-menu-item';
+    }
+
+    # Campus post and Archives
+    if ((is_post_type_archive('campus') || get_post_type() == 'campus' || is_page('campuses')) && ($item->title == "Campuses")) {
         $classes[] = 'current-menu-item';
     }
     return $classes;
@@ -103,6 +111,10 @@ add_filter('nav_menu_css_class', 'add_nav_menu_classes', 10, 2);
 // Manipulate Default Queries
 function university_adjust_queries($query)
 {
+    if (!is_admin() and is_post_type_archive('campus') and $query->is_main_query()) {
+        $query->set('posts_per_page', -1);
+    }
+
     if (!is_admin() and is_post_type_archive('program') and $query->is_main_query()) {
         $query->set('posts_per_page', -1);
         $query->set('orderby', 'title');
@@ -126,3 +138,13 @@ function university_adjust_queries($query)
 }
 
 add_action('pre_get_posts', 'university_adjust_queries');
+
+// Adding Google Maps API
+
+function university_mapKey($api)
+{
+    $api['key'] = 'AIzaSyBJ0Ah1go3F3Fd7I65PYQdcK5R_vMMrWns';
+    return $api;
+}
+
+add_filter('acf/fields/google_map/api', 'university_mapKey');
