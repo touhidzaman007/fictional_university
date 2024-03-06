@@ -27,7 +27,7 @@ function university_post_types()
     register_post_type('program', array(
         'show_in_rest' => true,
         'supports' => array(
-            'title', 'editor', 'excerpt'
+            'title', 'excerpt'
         ),
         'rewrite' => array(
             'slug' => 'programs'
@@ -36,7 +36,7 @@ function university_post_types()
         'public' => true,
         'menu_icon' => 'dashicons-tickets',
         'labels' => array(
-            'name' => 'Program',
+            'name' => 'Programs',
             'add_new' => 'Add New Program',
             'add_new_item' => 'Add New Program',
             'edit_item' => 'Edit Program',
@@ -55,7 +55,7 @@ function university_post_types()
         'public' => true,
         'menu_icon' => 'dashicons-welcome-learn-more',
         'labels' => array(
-            'name' => 'Professor',
+            'name' => 'Professors',
             'add_new' => 'Add New Professor',
             'add_new_item' => 'Add New Professor',
             'edit_item' => 'Edit Professor',
