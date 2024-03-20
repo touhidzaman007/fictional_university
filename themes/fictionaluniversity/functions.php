@@ -1,6 +1,7 @@
 <?php
 
 require get_theme_file_path('/inc/search-route.php');
+require get_theme_file_path('/inc/like-route.php');
 
 // Add Custom Field to WP REST API
 function university_custom_rest()
