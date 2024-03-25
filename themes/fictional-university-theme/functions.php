@@ -254,3 +254,13 @@ function makeNotePrivate($data, $postarr)
 }
 
 add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2);
+
+
+// Adding ignoring certain files from exporting
+
+function ignoreCertainFiles($exclude_filters)
+{
+    $exclude_filters[] = 'themes/fictional-university-theme/node_modules';
+}
+
+add_filter('ai1wm_exclude_content_from_export', 'ignoreCertainFiles');
